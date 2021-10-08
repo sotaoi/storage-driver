@@ -9,7 +9,7 @@ declare class StorageDriver {
     clientSecret: null | string,
     clientId: string,
     clientKey: string,
-    preferSecure: string,
+    preferSecure: boolean,
   );
 
   // alias for assetLink(filepath)
