@@ -24,11 +24,7 @@ class StorageDriver {
     return this.assetLink(filepath);
   }
   assetLink(filepath) {
-    if (
-      typeof this.storageUrl !== 'string' ||
-      typeof this.clientKey !== 'string' ||
-      typeof this.filepath !== 'string'
-    ) {
+    if (typeof this.storageUrl !== 'string' || typeof this.clientKey !== 'string' || typeof filepath !== 'string') {
       return null;
     }
     return `${this.storageUrl}/asset/${this.clientKey}/${filepath}`;
