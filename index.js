@@ -1,10 +1,10 @@
 class StorageDriver {
-  storageUrl = null;
-  clientSecret = null;
-  clientId = null;
-  clientKey = null;
-
   constructor(storageUrl, clientSecret, clientId, clientKey, preferSecure) {
+    this.storageUrl = null;
+    this.clientSecret = null;
+    this.clientId = null;
+    this.clientKey = null;
+
     if (typeof storageUrl === 'string') {
       while (storageUrl.charAt(storageUrl.lenght - 1) === '/') {
         storageUrl = storageUrl.substr(0, storageUrl.length - 1);
