@@ -1,0 +1,8 @@
+{
+  "name": "@sotaoi/storage-driver",
+  "private": false,
+  "version": "0.9.1",
+  "scripts": {
+    "bootstrap": "npm install --no-audit --no-fund"
+  }
+}
