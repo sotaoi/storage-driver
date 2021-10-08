@@ -34,3 +34,5 @@ class StorageDriver {
     return `${this.storageUrl}/asset/${this.clientKey}/${filepath}`;
   }
 }
+
+module.exports = { StorageDriver };
