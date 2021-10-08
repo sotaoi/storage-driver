@@ -27,6 +27,9 @@ class StorageDriver {
     if (typeof this.storageUrl !== 'string' || typeof this.clientKey !== 'string' || typeof filepath !== 'string') {
       return null;
     }
+    while (filepath.charAt(0) === '/') {
+      filepath = filepath.substr(1, filepath.length);
+    }
     return `${this.storageUrl}/asset/${this.clientKey}/${filepath}`;
   }
 }
