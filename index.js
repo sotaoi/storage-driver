@@ -9,7 +9,7 @@ class StorageDriver {
       while (storageUrl.charAt(storageUrl.lenght - 1) === '/') {
         storageUrl = storageUrl.substr(0, storageUrl.length - 1);
       }
-      if (storageUrl.substr(0, 7) !== 'http' && storageUrl.substr(0, 8) !== 'https') {
+      if (storageUrl.substr(0, 7) !== 'http://' && storageUrl.substr(0, 8) !== 'https://') {
         storageUrl = preferSecure ? `https://${storageUrl}` : `http://${storageUrl}`;
       }
     }
