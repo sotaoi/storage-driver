@@ -112,7 +112,115 @@ class StorageDriver {
     formData.append('clientKey', this.clientKey);
     formData.append('url', url);
     return await (
-      await fetch(`${this.storageUrl}/asset/check`, {
+      await fetch(`${this.storageUrl}/asset/check-url`, {
+        method: 'POST',
+        body: formData,
+      })
+    ).json();
+  }
+
+  async checkAssetFilepath(filepath) {
+    const formData = new FormData();
+    formData.append('clientName', this.clientName);
+    formData.append('clientId', this.clientId);
+    formData.append('clientSecret', this.clientSecret);
+    formData.append('clientKey', this.clientKey);
+    formData.append('filepath', filepath);
+    return await (
+      await fetch(`${this.storageUrl}/asset/check-filepath`, {
+        method: 'POST',
+        body: formData,
+      })
+    ).json();
+  }
+
+  storeDoc(docpath, doc) {
+    return new Promise((resolve, reject) => {
+      const form = new FormData();
+      form.append('clientName', this.clientName);
+      form.append('clientId', this.clientId);
+      form.append('clientSecret', this.clientSecret);
+      form.append('docpath', docpath);
+      form.append('doc', doc);
+
+      form.submit(`${this.storageUrl}/doc/store`, (err, res) => {
+        try {
+          if (err) {
+            reject(err);
+            return;
+          }
+
+          const chunks = [];
+          res.on('data', (chunk) => {
+            chunks.push(chunk);
+          });
+          res.on('end', () => {
+            const result = JSON.parse(Buffer.concat(chunks).toString());
+            result.success ? resolve(result) : reject(result);
+          });
+
+          res.resume();
+        } catch (err) {
+          reject(err);
+        }
+      });
+    });
+  }
+
+  async retrieveDoc(docpath) {
+    const formData = new FormData();
+    formData.append('clientName', this.clientName);
+    formData.append('clientId', this.clientId);
+    formData.append('clientSecret', this.clientSecret);
+    formData.append('docpath', docpath);
+    return await (
+      await fetch(`${this.storageUrl}/doc/retrieve`, {
+        method: 'POST',
+        body: formData,
+      })
+    ).blob();
+  }
+
+  async removeDoc(docpath) {
+    return await new Promise((resolve, reject) => {
+      const form = new FormData();
+      form.append('clientName', this.clientName);
+      form.append('clientId', this.clientId);
+      form.append('clientSecret', this.clientSecret);
+      form.append('docpath', docpath);
+
+      form.submit(`${this.storageUrl}/doc/remove`, (err, res) => {
+        try {
+          if (err) {
+            reject(err);
+            return;
+          }
+
+          const chunks = [];
+          res.on('data', (chunk) => {
+            chunks.push(chunk);
+          });
+          res.on('end', () => {
+            const result = JSON.parse(Buffer.concat(chunks).toString());
+            result.success ? resolve(result) : reject(result);
+          });
+
+          res.resume();
+        } catch (err) {
+          reject(err);
+        }
+      });
+    });
+  }
+
+  async checkDocpath(docpath) {
+    const formData = new FormData();
+    formData.append('clientName', this.clientName);
+    formData.append('clientId', this.clientId);
+    formData.append('clientSecret', this.clientSecret);
+    formData.append('docpath', docpath);
+    return await (
+      await fetch(`${this.storageUrl}/doc/check-docpath`, {
         method: 'POST',
         body: formData,
       })
