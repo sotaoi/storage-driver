@@ -10,7 +10,7 @@ class StorageDriver {
     this.clientKey = null;
 
     if (typeof storageUrl === 'string') {
-      while (storageUrl.charAt(storageUrl.lenght - 1) === '/') {
+      while (storageUrl.charAt(storageUrl.length - 1) === '/') {
         storageUrl = storageUrl.substr(0, storageUrl.length - 1);
       }
       if (storageUrl.substr(0, 7) !== 'http://' && storageUrl.substr(0, 8) !== 'https://') {
@@ -33,10 +33,17 @@ class StorageDriver {
       return null;
     }
     while (filepath.charAt(0) === '/') {
-      filepath = filepath.substr(1, filepath.length);
+      filepath = filepath.substr(1, filepath.length - 1);
     }
     return `${this.storageUrl}/asset/${this.clientKey}/${filepath}`;
   }
+
+  //
+
+  // read asset dir
+  // read doc dir
+
+  //
 
   storeAsset(filepath, asset) {
     return new Promise((resolve, reject) => {
@@ -77,7 +84,6 @@ class StorageDriver {
       form.append('clientName', this.clientName);
       form.append('clientId', this.clientId);
       form.append('clientSecret', this.clientSecret);
-      form.append('clientKey', this.clientKey);
       form.append('filepath', filepath);
 
       form.submit(`${this.storageUrl}/asset/remove`, (err, res) => {
